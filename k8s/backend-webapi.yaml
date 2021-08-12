@@ -27,8 +27,8 @@ spec:
     spec:
       containers:
         - name: demowebapi
-          image: "workshopdev/webapi:net5-v1"
-          imagePullPolicy: Always
+          image: "[replace].azurecr.io/sample/demoweb-api:v1"
+          imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
                 path: /health

@@ -29,21 +29,14 @@ spec:
     spec:
       containers:
         - name: demowebapp
-          image: "workshopdev/webapp:net5-v1"
-          imagePullPolicy: Always
+          image: "[replace].azurecr.io/sample/demoweb-app:v1"
+          imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
                 path: /health
                 port: 80
             initialDelaySeconds: 1
             periodSeconds: 5
-          readinessProbe:
-            httpGet:
-                path: /readiness
-                port: 80
-            initialDelaySeconds: 3
-            periodSeconds: 2
-            failureThreshold: 5
           resources:
             requests:
               memory: 256Mi
