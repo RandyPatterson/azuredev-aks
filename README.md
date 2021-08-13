@@ -1,16 +1,4 @@
 
-<style type="text/css">
-
-.note {
-  border-radius: 25px;
-  background: lightblue;
-  padding: 20px;
-  margin: 15px 0 15px 0
-}
-
-</style>
-
-
 ![](media/image_header.png)
 # Azure Developer Days Lab - Azure Kubernetes Service (AKS)
 >Duration 45 minutes
@@ -182,3 +170,16 @@ az acr build \
 kubectl scale ......
 ```
 </details>
+
+
+
+<style type="text/css">
+
+.note {
+  border-radius: 25px;
+  background: lightblue;
+  padding: 20px;
+  margin: 15px 0 15px 0
+}
+
+</style>
