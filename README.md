@@ -1,5 +1,5 @@
 
-<style>
+<style type="text/css">
 .note {
   border-radius: 25px;
   background: lightblue;
@@ -97,11 +97,11 @@ az aks create \
 In this task you will clone the Github repository hosting the sample application consiting of two containers, a Docker file to build the container images and Kubernetes YAML files to deploy the application to AKS
 
 
-<article style=" border-radius: 25px; background: lightblue; padding: 20px; margin: 15px 0 15px 0" >
+<div class="note"> 
 NOTE:
 
 The Dockerfile used in the following example depends on a public base container image from Docker Hub. To improve reliability when using public content, import and manage the image in a private Azure container registry, and update your Dockerfile to use your privately managed base image. <a href="https://docs.microsoft.com/en-us/azure/container-registry/buffer-gate-public-content">Learn more about working with public images</a>
-</article>
+</div>
 
 
 1. Clone the Github repository
