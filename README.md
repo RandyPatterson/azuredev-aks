@@ -1,11 +1,13 @@
 
 <style type="text/css">
+
 .note {
   border-radius: 25px;
   background: lightblue;
   padding: 20px;
   margin: 15px 0 15px 0
 }
+
 </style>
 
 
