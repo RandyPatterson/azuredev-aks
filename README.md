@@ -118,18 +118,44 @@ az acr build \
     1. Next, open the file **backend-webapi.yaml** and update the string **"[replace]"** for the container image name with the name of your container registry 
     ![](media/image-5.png)
 
+    1. Save your changes by pressing ```CTRL+S``` and exit the editor by pressing ```CTRL+Q```
 
+    1. Finally, deploy the application to your kubernetes cluster 
 
-
-
-
-    >![](/media/challange.png)Challenge: Scale the front web app pods to 4 instances
-
-    <details>
-    <summary>Answer</summary>
-    
-    ### Scale the web app pods to 4 replicas using the command
     ```bash
-    kubectl scale ......
+    kubectl create \
+        -f k8s/frontend-webapp.yaml  \
+        -f k8s/backend-webapi.yaml
     ```
-    </details>
+    ![](media/image-6.png)
+
+1. Verify application deployed correctly 
+
+    Veift that the application deployed correctly by checking the status of your *Pods*, *Deployemens* and *Replicasets*
+    ```bash
+     kubectl get all
+    ```
+
+    Verify that all 4 pods have a status of **Running**. You may have run ```kubectl get all``` several times before the status changes to **Running**.  
+    
+    ![](media/image-7.png)
+
+    Next, wait for the **EXTERNAL-IP** address for the **service/demowebapp** load balancer to change from *Pending* to an ip address.  You may have to run ```kubectl get services``` several times before the IP Address is assigned and displayed.  
+
+    Open your local borwser and navigate the the IP Address displayed in **EXTERNAL-IP** to verify the application is running.
+
+    ![](media/image-8.png)
+
+    
+
+
+>![](/media/challange.png) **Challenge**: Scale the front-end web app to 4 replicas
+
+<details>
+<summary>Answer</summary>
+
+### Scale the front-end web app to 4 replicas
+```bash
+kubectl scale ......
+```
+</details>
