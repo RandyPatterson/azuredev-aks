@@ -5,6 +5,13 @@
 
 # Table of contents 
 
+- [Task 1 - Login to Azure Cloud Shell](#task-1---login-to-azure-cloud-shell)
+- [Task 2 - Create a Container Registry](#task-2---create-a-container-registry)
+- [Task 3 - Create an Azure Kubernetes Cluster](#task-3---create-an-azure-kubernetes-cluster)
+- [Task 4 - Build and Push images](#task-4---build-and-push-images)
+- [Task 5 - Deploy application to AKS](#task-5---deploy-application-to-aks)
+- [Cleanup Resources](#cleanup-resources)
+
 
 **Objectives**
 
@@ -15,20 +22,9 @@ This lab provides walkthroughs on various Kubernetes topics:
   - Creating Docker images
   - Deploying a Microservice application to AKS
 
-[reference](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-quickstart-task-cli)
-
-Log into Azure
-
-Launch Azure Cloud Shell 
-
-Create ACR
-
-Create AKS liked to ACR
-
-create docker images
 
 ---
-## Task 1: Login to Azure Cloud Shell
+## Task 1 - Login to Azure Cloud Shell
 In this exercise you log into your Azure Subscription and launch the Bash [Azure Cloud Shell](https://docs.microsoft.com/en-us/azure/cloud-shell/overview). The Azure Cloud Shell will give you a Linux shell prompt with all the required software installed and configured.  
 
 1. [Launch Cloud Shell](https://shell.azure.com)  (https://shell.azure.com)
@@ -44,11 +40,11 @@ In this exercise you log into your Azure Subscription and launch the Bash [Azure
         ![](/media/image-2.png)    
 
 ![](media/image-3.png "Azure Cloud Shell Bash prompt")
->![](media/idea.png) Use ***shift+insert*** to paste the commands from this lab into the cloud shell terminal
+>![](media/idea.png) Use ***shift+insert*** to paste the commands from this document into the cloud shell terminal
 
-## Task 2: Create a Container Registry 
+## Task 2 - Create a Container Registry
 
-1. First, create a unique name for the container registry 
+1. First, generate a unique name for the container registry 
 ```bash
 acr="azdevdaysacr"$RANDOM
 echo $acr
@@ -93,7 +89,6 @@ In this task you will clone the Github repository hosting the sample application
 The Dockerfile used in the following example depends on a public base container image from Docker Hub. To improve reliability when using public content, import and manage the image in a private Azure container registry, and update your Dockerfile to use your privately managed base image. <a href="https://docs.microsoft.com/en-us/azure/container-registry/buffer-gate-public-content">Learn more about working with public images</a>
 
 </div>
-
 
 1. Clone the Github repository
 
@@ -147,7 +142,7 @@ az acr build \
      kubectl get all
     ```
 
-    Verify that all 4 pods have a status of **Running**. You may have run ```kubectl get all``` several times before the status changes to **Running**.  
+    Verify that all 4 pods have a status of **Running**. You may have run ```kubectl get all``` several times before the status changes to **Running** for all of the pods.  
     
     ![](media/image-7.png)
 
@@ -157,9 +152,9 @@ az acr build \
 
     Open your local browser and navigate the the IP Address displayed in **EXTERNAL-IP** to verify the application is running.
 
+    This application will display the name of the *dempwebapp* and the *demowebapi* pods that it is currently connected to.  These names will match the name of the pods displayed using ```kubectl get pods```.  **Refreshing** the page will eventually display different pod names showing that the Load Balancer services (service/demowebapi & service/demowebapp ) are routing requests to different pods.
+
     ![](media/image-8.png)
-
-
 
 >![](/media/challange.png) **Challenge**: Scale the front-end web app to 4 replicas
 
@@ -167,8 +162,20 @@ az acr build \
 <summary>Answer</summary>
 
 ### Scale the front-end web app to 4 replicas
+One possible solution 
 ```bash
-kubectl scale ......
+ kubectl scale deployment/demowebapp --replicas=4
+ #refreshing the web page should show the additional pod names
 ```
 </details>
 
+---
+## Cleanup Resources
+when finished you can delete all of the resources this lab created by deleting the resource group 
+
+```bash
+az group delete -n azuredevdays-rg     
+```
+![](media/idea.png)  It can take several minutes for Azure to delete all of the resource. 
+
+![](media/image-9.png)
