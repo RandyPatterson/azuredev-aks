@@ -1,3 +1,14 @@
+
+<style>
+.note {
+  border-radius: 25px;
+  background: lightblue;
+  padding: 20px;
+  margin: 15px 0 15px 0
+}
+</style>
+
+
 ![](media/image_header.png)
 # Azure Developer Days Lab - Azure Kubernetes Service (AKS)
 >Duration 45 minutes
@@ -83,8 +94,17 @@ az aks create \
 
 
 ## Task 4 - Build and Push images
+In this task you will clone the Github repository hosting the sample application consiting of two containers, a Docker file to build the container images and Kubernetes YAML files to deploy the application to AKS
 
-1. Download repository 
+
+<div class="note">
+NOTE:
+
+The Dockerfile used in the following example depends on a public base container image from Docker Hub. To improve reliability when using public content, import and manage the image in a private Azure container registry, and update your Dockerfile to use your privately managed base image. <a href="https://docs.microsoft.com/en-us/azure/container-registry/buffer-gate-public-content">Learn more about working with public images</a>
+</div>
+
+
+1. Clone the Github repository
 
 ```bash
 git clone https://github.com/RandyPatterson/azuredev-aks.git
@@ -142,11 +162,12 @@ az acr build \
 
     Next, wait for the **EXTERNAL-IP** address for the **service/demowebapp** load balancer to change from *Pending* to an ip address.  You may have to run ```kubectl get services``` several times before the IP Address is assigned and displayed.  
 
-    Open your local borwser and navigate the the IP Address displayed in **EXTERNAL-IP** to verify the application is running.
+    >![](media/idea.png) NOTE: Your ip address will be different from the one displayed here
+
+    Open your local browser and navigate the the IP Address displayed in **EXTERNAL-IP** to verify the application is running.
 
     ![](media/image-8.png)
 
-    
 
 
 >![](/media/challange.png) **Challenge**: Scale the front-end web app to 4 replicas
