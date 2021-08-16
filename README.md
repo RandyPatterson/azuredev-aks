@@ -50,6 +50,9 @@ acr="azdevdaysacr"$RANDOM
 echo $acr
 ```
 
+>![](media/idea.png) The Azure Container Registry name is unique to you and will be needed later.  Please save the name for later use. Your ACR Name will be different than the one shown below. 
+
+![](media/image-10.png)
 
 1. Create a Resource Group to organize the resources we will create in the Lab.  An Azure resource group is a logical container into which Azure resources are deployed and managed.
 
@@ -77,7 +80,10 @@ az aks create \
 ```
 >![](media/idea.png) This can take several minutes to complete 
 
-
+2. Update cloud shell with your AKS credentials 
+```bash
+az aks get-credentials --resource-group azuredevdays-rg --name azuredevdays-aks
+```
 
 ## Task 4 - Build and Push images
 In this task you will clone the Github repository hosting the sample application consiting of two containers, a Docker file to build the container images and Kubernetes YAML files to deploy the application to AKS
@@ -89,6 +95,8 @@ In this task you will clone the Github repository hosting the sample application
 The Dockerfile used in the following example depends on a public base container image from Docker Hub. To improve reliability when using public content, import and manage the image in a private Azure container registry, and update your Dockerfile to use your privately managed base image. <a href="https://docs.microsoft.com/en-us/azure/container-registry/buffer-gate-public-content">Learn more about working with public images</a>
 
 </div>
+</br>
+</br>
 
 1. Clone the Github repository
 
