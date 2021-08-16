@@ -121,6 +121,8 @@ az acr build \
     --file ./WebAPI/Dockerfile .
 ```
 ## Task 5 - Deploy application to AKS
+![](media/image-11.png)
+
 
 1. First, modify the Kubernetes YAML files to include the name of your Azure Container Registry created in [Task 2](#task-2-create-a-container-registry). You can type the command ``` echo $acr ``` to display the name of your Registry
 
