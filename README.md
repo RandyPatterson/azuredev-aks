@@ -44,46 +44,50 @@ In this exercise you log into your Azure Subscription and launch the Bash [Azure
 
 ## Task 2 - Create a Container Registry
 
-1. First, generate a unique name for the container registry 
-```bash
-acr="azdevdaysacr"$RANDOM
-echo $acr
-```
+1. First, generate a unique name and create a resource group to organize the resources we will create in the Lab.  An Azure resource group is a logical container into which Azure resources are deployed and managed.
 
->![](media/idea.png) The Azure Container Registry name is unique to you and will be needed later.  Please save the name for later use. Your ACR Name will be different than the one shown below. 
+    ```bash
+    rg="azdevdays"$RANDOM"-rg"
+    echo "rg: " $rg
+    az group create -n $rg --location eastus
+    ```
 
-![](media/image-10.png)
+1. Generate a unique name for the container registry 
 
-1. Create a Resource Group to organize the resources we will create in the Lab.  An Azure resource group is a logical container into which Azure resources are deployed and managed.
+    ```bash
+    acr="azdevdaysacr"$RANDOM
+    echo "ACR: " $acr
+    ```
 
-```bash
-az group create -n azuredevdays-rg --location eastus
-```
+    >![](media/idea.png) The Azure Container Registry name is unique to you and will be needed later.  Please save the name for later use. Your ACR Name will be different than the one shown below. 
 
-2. Next, create an Azure container registry in the Resource Group we created in the previous step.
+    ![](media/image-10.png)
 
-```bash 
-az acr create -g azuredevdays-rg --n $acr --sku Basic
-```
+1. Next, create an Azure container registry in the Resource Group we created in the previous step.
+
+    ```bash 
+    az acr create -g $rg --n $acr --sku Basic
+    ```
 
 ## Task 3 - Create an Azure Kubernetes Cluster 
 
 1. Create an AKS Cluster and link it to the Container Registry created in Exercise 2
 
-```bash 
-az aks create \
-    -n azuredevdays-aks \
-    -g azuredevdays-rg \
-    --generate-ssh-keys \
-    --attach-acr $acr \
-    --node-count 1
-```
+    ```bash 
+    az aks create \
+        -n azuredevdays-aks \
+        -g $rg \
+        --generate-ssh-keys \
+        --attach-acr $acr \
+        --node-count 1
+    ```
 >![](media/idea.png) This can take several minutes to complete 
 
 2. Update cloud shell with your AKS credentials 
-```bash
-az aks get-credentials --resource-group azuredevdays-rg --name azuredevdays-aks
-```
+
+    ```bash
+    az aks get-credentials --resource-group $rg --name azuredevdays-aks
+    ```
 
 ## Task 4 - Build and Push images
 In this task you will clone the Github repository hosting the sample application consiting of two containers, a Docker file to build the container images and Kubernetes YAML files to deploy the application to AKS
@@ -100,26 +104,27 @@ The Dockerfile used in the following example depends on a public base container 
 
 1. Clone the Github repository
 
-```bash
-git clone https://github.com/RandyPatterson/azuredev-aks.git
-cd azuredev-aks
-```
+    ```bash
+    git clone https://github.com/RandyPatterson/azuredev-aks.git
+    cd azuredev-aks
+    ```
 
 2. Build the Web App front-end image and upload to Container Registry
-```bash
-az acr build \
-    --image sample/demoweb-app:v1 \
-    --registry $acr \
-    --file ./WebApp/Dockerfile .
-```
+
+    ```bash
+    az acr build \
+        --image sample/demoweb-app:v1 \
+        --registry $acr \
+        --file ./WebApp/Dockerfile .
+    ```
 
 3. Build the API back-end image and upload to the container registry created in 
-```bash
-az acr build \
-    --image sample/demoweb-api:v1 \
-    --registry $acr \
-    --file ./WebAPI/Dockerfile .
-```
+    ```bash
+    az acr build \
+        --image sample/demoweb-api:v1 \
+        --registry $acr \
+        --file ./WebAPI/Dockerfile .
+    ```
 ## Task 5 - Deploy application to AKS
 ![](media/image-11.png)
 
@@ -166,25 +171,25 @@ az acr build \
 
     ![](media/image-8.png)
 
->![](/media/challange.png) **Challenge**: Scale the front-end web app to 4 replicas
+    >![](/media/challange.png) **Challenge**: Scale the front-end web app to 4 replicas
 
-<details>
-<summary>Answer</summary>
+    <details>
+    <summary>Answer</summary>
 
-### Scale the front-end web app to 4 replicas
-One possible solution 
-```bash
- kubectl scale deployment/demowebapp --replicas=4
- #refreshing the web page should show the additional pod names
-```
-</details>
+    ### Scale the front-end web app to 4 replicas
+    One possible solution 
+    ```bash
+    kubectl scale deployment/demowebapp --replicas=4
+    #refreshing the web page should show the additional pod names
+    ```
+    </details>
 
 ---
 ## Cleanup Resources
 when finished you can delete all of the resources this lab created by deleting the resource group 
 
 ```bash
-az group delete -n azuredevdays-rg     
+az group delete -n $rg     
 ```
 ![](media/idea.png)  It can take several minutes for Azure to delete all of the resource. 
 
