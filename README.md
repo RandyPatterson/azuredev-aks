@@ -39,8 +39,8 @@ In this exercise you log into your Azure Subscription and launch the Bash [Azure
     
         ![](/media/image-2.png)    
 
-![](media/image-3.png "Azure Cloud Shell Bash prompt")
->![](media/idea.png) Use ***shift+insert*** to paste the commands from this document into the cloud shell terminal
+        ![](media/image-3.png "Azure Cloud Shell Bash prompt")
+        >![](media/idea.png) Use ***shift+insert*** to paste the commands from this document into the cloud shell terminal
 
 ## Task 2 - Create a Container Registry
 
@@ -125,6 +125,8 @@ The Dockerfile used in the following example depends on a public base container 
         --registry $acr \
         --file ./WebAPI/Dockerfile .
     ```
+
+    >![](media/idea.png) For additional information on the ACR build task see this [Tutorial](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-quickstart-task-cli)
 ## Task 5 - Deploy application to AKS
 ![](media/image-11.png)
 
@@ -143,21 +145,24 @@ The Dockerfile used in the following example depends on a public base container 
 
     1. Finally, deploy the application to your kubernetes cluster 
 
-    ```bash
-    kubectl create \
-        -f k8s/frontend-webapp.yaml  \
-        -f k8s/backend-webapi.yaml
-    ```
-    ![](media/image-6.png)
+        ```bash
+        kubectl create \
+            -f k8s/frontend-webapp.yaml  \
+            -f k8s/backend-webapi.yaml
+        ```
+        ![](media/image-6.png)
 
 1. Verify application deployed correctly 
 
-    Veift that the application deployed correctly by checking the status of your *Pods*, *Deployemens* and *Replicasets*
+    Veify that the application deployed correctly by checking the status of your *Pods*, *Deployemens* and *Replicasets*
+    
     ```bash
-     kubectl get all
+    kubectl get all
     ```
 
-    Verify that all 4 pods have a status of **Running**. You may have run ```kubectl get all``` several times before the status changes to **Running** for all of the pods.  
+    Verify that all 4 pods have a status of **Running**. You may have run 
+    
+    ```kubectl get all``` several times before the status changes to **Running** for all of the pods.  
     
     ![](media/image-7.png)
 
