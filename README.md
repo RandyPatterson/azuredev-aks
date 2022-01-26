@@ -200,3 +200,10 @@ az group delete -n $rg
 ![](media/idea.png)  It can take several minutes for Azure to delete all of the resource. 
 
 ![](media/image-9.png)
+
+Finally, delete the cluster ingformation from your ```kubectl``` config file
+
+```bash
+kubectl config delete-cluster azuredevdays-aks
+kubectl config delete-context azuredevdays-aks
+```
