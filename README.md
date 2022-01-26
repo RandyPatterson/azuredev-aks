@@ -79,7 +79,8 @@ In this exercise you log into your Azure Subscription and launch the Bash [Azure
         -g $rg \
         --generate-ssh-keys \
         --attach-acr $acr \
-        --node-count 1
+        --node-count 1 \
+        --disable-rbac
     ```
 >![](media/idea.png) This can take several minutes to complete 
 
